@@ -15,4 +15,4 @@ class BenhNhan(models.Model):
     CCCD = models.CharField(max_length=20,blank=False, null=False)
 class PhongKham(models.Model):
     NamePK = models.CharField(max_length = 200,blank=False, null=False)
-    SoPhong = models.IntegerField()
+    SoPhong = models.IntegerField(blank=False, null=False)

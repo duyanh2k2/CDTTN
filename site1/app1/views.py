@@ -1,13 +1,15 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
-from .models import Question,BenhNhan
+from .models import Question,BenhNhan,PhongKham
 from collections import deque
 from .form import MyForm,NhapBN
 import time
 # Create your views here.
 
 dq= deque()
-
+dq1 = deque()
+dq2 = deque()
+dq3 = deque()
 def nhapbn(request):
     a= NhapBN()
     return render(request,"app1/nhapbn.html",{"form":a})
@@ -34,4 +36,29 @@ def savebn(request):
     else:
         return HttpResponse("ko phải post")      
 def hien(request):
-    return render(request,"app1/hienbn.html",{"dq":dq})
+    listPK = PhongKham.objects.all()
+    context={"dq":dq , "listPK":listPK}
+    return render(request,"app1/hienbn.html",context)
+def chuyendenpk(request):
+    if request.method == 'POST':
+        # Lấy dữ liệu từ request.POST cho các dữ liệu gửi dưới dạng POST
+        data = request.POST.get('selected_option', None)
+        if data is not None:
+            if data=="1":
+                g=dq.popleft()
+                dq1.append(g)
+                return redirect('PK')
+            elif data=="2":
+                g=dq.popleft()
+                dq2.append(g)
+                return redirect('PK')
+            elif data=="3":
+                g=dq.popleft()
+                dq3.append(g)
+                return redirect('PK')
+        else:
+            return HttpResponse('Không tìm thấy dữ liệu')
+    else:
+        return HttpResponse('Yêu cầu không hợp lệ')
+def hienPK(request):
+    return render(request,"app1/hienPK.html",{"dq":dq1,"dq1":dq2,"dq2":dq3})
