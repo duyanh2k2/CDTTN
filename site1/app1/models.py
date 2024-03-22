@@ -13,3 +13,6 @@ class BenhNhan(models.Model):
     Date = models.DateField()
     DateK = models.DateTimeField(default=timezone.datetime.now())
     CCCD = models.CharField(max_length=20,blank=False, null=False)
+class PhongKham(models.Model):
+    NamePK = models.CharField(max_length = 200,blank=False, null=False)
+    SoPhong = models.IntegerField()
